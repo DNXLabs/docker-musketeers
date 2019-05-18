@@ -5,7 +5,7 @@ WORKDIR /go/src/github.com/awslabs/amazon-ecr-credential-helper
 RUN make linux-amd64
 
 
-FROM docker
+FROM docker:18
 
 LABEL maintainer "@adenot"
 
@@ -18,5 +18,7 @@ RUN apk --no-cache update && apk --no-cache upgrade \
 RUN pip install --upgrade pip docker-compose
 
 COPY --from=build-ecr-plugin /go/src/github.com/awslabs/amazon-ecr-credential-helper/bin/linux-amd64/docker-credential-ecr-login /bin
+RUN mkdir -p ~/.docker
+RUN echo > ~/.docker/config.json '{ "credsStore": "ecr-login" }'
 
 CMD [ "make" ]
