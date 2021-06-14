@@ -1,16 +1,11 @@
-[![Build Status][linkTravisCIProjectBadge]][linkTravisCIProject]
-[![Docker Build Status][linkBadgeDockerProjectBuildBadge]][linkDockerHubProjectBuild]
-[![Generic badge][linkDockerHubProjectBadge]][linkDockerHubProject]
-[![License][linkLicenseBadge]][linkLicense]
+# docker-musketeers
 
-# Docker - Musketeers
-
-🐳 Lightweight image with essential tools for a [3 Musketeers][link3Musketeers] project. ⚔️
+🐳 Lightweight image with essential tools for a [3 Musketeers][] project.
 
 ## Tools
 
 - Docker: useful when doing Docker in Docker (DinD).
-- Compose
+- docker-compose
 - make
 - zip
 - curl
@@ -23,47 +18,31 @@
 
 ```bash
 # pull image
-$ docker pull flemay/musketeers
+$ docker pull dnxsolutions/musketeers
 # run image
-$ docker run --rm flemay/musketeers docker --version
+$ docker run --rm dnxsolutions/musketeers docker --version
 ```
+
+## Development
 
 ```bash
-# Development
-
-# generate .env file
-$ make envfile
 # build image
-$ make build
+make build
+
 # test image
-$ make test
+make test
+
+# lint image
+make lint
+
 # go inside a musketeers container
-$ make shell
+make shell
 ```
 
-## Example
+## Author
 
-The GitLab pipeline to build and test the Docker image [flemay/cookiecutter][link3MusketeersExamples] uses `flemay/musketeers` image.
+Managed by [DNX Solutions](https://github.com/DNXLabs).
 
-## Versioning
+## License
 
-This image will always be built with the tag `latest` so tools will always be up to date. This may cause issues if any tool has a breaking change.
-
-## Automated build process
-
-In a nutshell, any change to master triggers a [Travis build][linkTravisCIProject] and if the tests passed it triggers a [Docker Hub build][linkDockerHubProjectBuild]. The automatic build on Docker Hub has been disabled ensuring the build process to go only through Travis.
-
-A cron task in Travis triggers a build every month making the image to be as fresh as possible automatically.
-
-
-[link3Musketeers]: https://3musketeers.io
-[link3MusketeersExamples]: https://3musketeers.io/examples/
-
-[linkLicenseBadge]: https://img.shields.io/dub/l/vibe-d.svg
-[linkLicense]: LICENSE
-[linkTravisCIProjectBadge]: https://travis-ci.org/flemay/docker-musketeers.svg?branch=master
-[linkTravisCIProject]: https://travis-ci.org/flemay/docker-musketeers
-[linkDockerHubProjectBadge]: https://img.shields.io/badge/repository-dockerhub-blue.svg
-[linkDockerHubProject]: https://hub.docker.com/r/flemay/musketeers
-[linkDockerHubProjectBuild]: https://hub.docker.com/r/flemay/musketeers/builds/
-[linkBadgeDockerProjectBuildBadge]: https://img.shields.io/docker/build/flemay/musketeers.svg
+Apache 2 Licensed. See [LICENSE](https://github.com/DNXLabs/docker-musketeers/blob/master/LICENSE) for full details.
