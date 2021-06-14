@@ -1,4 +1,8 @@
 # docker-musketeers
+[![Lint](https://github.com/DNXLabs/docker-musketeers/actions/workflows/lint.yml/badge.svg)](https://github.com/DNXLabs/docker-musketeers/actions/workflows/lint.yml)
+[![Security](https://github.com/DNXLabs/docker-musketeers/actions/workflows/security.yml/badge.svg)](https://github.com/DNXLabs/docker-musketeers/actions/workflows/security.yml)
+[![Build and Push Docker image](https://github.com/DNXLabs/docker-musketeers/actions/workflows/registry.yml/badge.svg)](https://github.com/DNXLabs/docker-musketeers/actions/workflows/registry.yml)
+
 
 🐳 Lightweight image with essential tools for a [3 Musketeers]() project.
 
