@@ -1,6 +1,6 @@
 # docker-musketeers
 
-🐳 Lightweight image with essential tools for a [3 Musketeers][] project.
+🐳 Lightweight image with essential tools for a [3 Musketeers]() project.
 
 ## Tools
 
