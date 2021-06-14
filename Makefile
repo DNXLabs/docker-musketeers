@@ -1,29 +1,13 @@
-COMPOSE_BUILD_MUSKETEERS = docker-compose build --no-cache musketeers
-COMPOSE_RUN_MUSKETEERS = docker-compose run --rm musketeers
-ENVFILE ?= env.template
-
-all:
-	ENVFILE=env.example $(MAKE) envfile build test clean
-
-onPullRequest: envfile build test clean
-
-onMasterChange: envfile build test dockerhubBuild clean
-
-envfile:
-	cp -f $(ENVFILE) .env
+IMAGE_NAME ?= dnxsolutions/musketeers:latest
 
 build:
-	$(COMPOSE_BUILD_MUSKETEERS)
-
-test:
-	$(COMPOSE_RUN_MUSKETEERS) ./scripts/test.sh
+	docker build -t $(IMAGE_NAME) .
 
 shell:
-	$(COMPOSE_RUN_MUSKETEERS)
+	docker run --rm -it --entrypoint=/bin/bash $(IMAGE_NAME)
 
-clean:
-	docker-compose down --remove-orphans
-	rm -f .env
+test:
+	docker run --rm -it -v $(PWD)/:/opt/app -w /opt/app --entrypoint=./scripts/test.sh $(IMAGE_NAME)
 
-dockerhubBuild:
-	$(COMPOSE_RUN_MUSKETEERS) ./scripts/dockerhub-build.sh
+lint:
+	docker run --rm -i -v $(PWD)/hadolint.yaml:/.config/hadolint.yaml hadolint/hadolint < Dockerfile
