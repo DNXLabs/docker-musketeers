@@ -30,4 +30,9 @@ RUN apk --no-cache update && \
       rm -rf /tmp/* && \
       rm -rf /var/cache/apk/*
 
+  
+
 COPY --from=build-ecr-plugin /go/src/github.com/awslabs/amazon-ecr-credential-helper/bin/linux-amd64/docker-credential-ecr-login /bin
+
+RUN mkdir -p ~/.docker
+RUN echo > ~/.docker/config.json '{ "credsStore": "ecr-login" }'
