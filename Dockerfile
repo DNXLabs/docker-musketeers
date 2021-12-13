@@ -1,4 +1,4 @@
-FROM golang:1.9 AS build-ecr-plugin
+FROM golang:1.13 AS build-ecr-plugin
 
 RUN go get -u github.com/awslabs/amazon-ecr-credential-helper/ecr-login/cli/docker-credential-ecr-login
 WORKDIR /go/src/github.com/awslabs/amazon-ecr-credential-helper
@@ -30,9 +30,7 @@ RUN apk --no-cache update && \
       rm -rf /tmp/* && \
       rm -rf /var/cache/apk/*
 
-  
-
 COPY --from=build-ecr-plugin /go/src/github.com/awslabs/amazon-ecr-credential-helper/bin/linux-amd64/docker-credential-ecr-login /bin
 
-RUN mkdir -p ~/.docker \ 
+RUN mkdir -p ~/.docker && \ 
     echo > ~/.docker/config.json '{ "credsStore": "ecr-login" }'
