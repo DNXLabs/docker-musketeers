@@ -14,6 +14,7 @@ RUN apk --no-cache update && \
       curl \
       py-pip \
       openssl \
+      openssh \      
       bash \
       gettext \
       g++ \
