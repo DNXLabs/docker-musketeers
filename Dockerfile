@@ -1,10 +1,6 @@
-FROM golang:1.13 AS build-ecr-plugin
-
-RUN go get -u github.com/awslabs/amazon-ecr-credential-helper/ecr-login/cli/docker-credential-ecr-login
-WORKDIR /go/src/github.com/awslabs/amazon-ecr-credential-helper
-RUN make linux-amd64
-
 FROM docker
+
+ENV AWS_ECR_CRED_HELPER_VERSION="v0.7.1"
 
 RUN apk --no-cache update && \
     apk --no-cache add --upgrade \
@@ -14,7 +10,7 @@ RUN apk --no-cache update && \
       curl \
       py-pip \
       openssl \
-      openssh \      
+      openssh \
       bash \
       gettext \
       g++ \
@@ -24,14 +20,15 @@ RUN apk --no-cache update && \
       openssl-dev \
       libffi-dev \
       musl-dev \
-      docker-compose && \
-      python3 -m pip --no-cache-dir install --upgrade pip && \
+      docker-compose \
+      wget && \
       update-ca-certificates && \
+      wget -nv -O /bin/docker-credential-ecr-login \
+      https://amazon-ecr-credential-helper-releases.s3.us-east-2.amazonaws.com/${AWS_ECR_CRED_HELPER_VERSION#v}/linux-amd64/docker-credential-ecr-login \
+      && chmod +x /bin/docker-credential-ecr-login && \
       rm -rf /var/tmp/ && \
       rm -rf /tmp/* && \
       rm -rf /var/cache/apk/*
 
-COPY --from=build-ecr-plugin /go/src/github.com/awslabs/amazon-ecr-credential-helper/bin/linux-amd64/docker-credential-ecr-login /bin
-
-RUN mkdir -p ~/.docker && \ 
+RUN mkdir -p ~/.docker && \
     echo > ~/.docker/config.json '{ "credsStore": "ecr-login" }'
