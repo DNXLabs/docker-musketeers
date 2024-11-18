@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 FROM docker
 
 ENV AWS_ECR_CRED_HELPER_VERSION="v0.7.1"
@@ -21,7 +22,8 @@ RUN apk --no-cache update && \
       libffi-dev \
       musl-dev \
       docker-compose \
-      wget && \
+      wget \
+      docker-cli-buildx && \
       update-ca-certificates && \
       wget -nv -O /bin/docker-credential-ecr-login \
       https://amazon-ecr-credential-helper-releases.s3.us-east-2.amazonaws.com/${AWS_ECR_CRED_HELPER_VERSION#v}/linux-amd64/docker-credential-ecr-login \
@@ -29,6 +31,3 @@ RUN apk --no-cache update && \
       rm -rf /var/tmp/ && \
       rm -rf /tmp/* && \
       rm -rf /var/cache/apk/*
-
-RUN mkdir -p ~/.docker && \
-    echo > ~/.docker/config.json '{ "credsStore": "ecr-login" }'
