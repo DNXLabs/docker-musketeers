@@ -21,7 +21,8 @@ RUN apk --no-cache update && \
       libffi-dev \
       musl-dev \
       docker-compose \
-      wget && \
+      wget \
+      docker-cli-buildx && \
       update-ca-certificates && \
       wget -nv -O /bin/docker-credential-ecr-login \
       https://amazon-ecr-credential-helper-releases.s3.us-east-2.amazonaws.com/${AWS_ECR_CRED_HELPER_VERSION#v}/linux-amd64/docker-credential-ecr-login \
